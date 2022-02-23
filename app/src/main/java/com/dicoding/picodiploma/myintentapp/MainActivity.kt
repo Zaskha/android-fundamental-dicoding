@@ -1,6 +1,7 @@
 package com.dicoding.picodiploma.myintentapp
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,13 +12,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        memperkenalkan button yang sudah ditambahkan
+//        memperkenalkan button move activity yang sudah ditambahkan
         val btnMoveActivity: Button = findViewById(R.id.btn_move_activity)
-//        menambah event
         btnMoveActivity.setOnClickListener(this)
 
+//        memperkenalkan button move activity with data
         val btnMoveWithDataActivity: Button = findViewById(R.id.btn_move_activity_data)
         btnMoveWithDataActivity.setOnClickListener(this)
+
+//        memperkenalkan button move activity with object
+        val btnMoveWithObject:Button = findViewById(R.id.btn_move_activity_object)
+        btnMoveWithObject.setOnClickListener(this)
+
+//        memperkenalkan button dial a number
+        val btnDialPhone:Button = findViewById(R.id.btn_dial_number)
+        btnDialPhone.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -33,6 +42,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 moveWithDataIntent.putExtra(MoveWithDataActivity.EXTRA_NAME, "Zaskha Sasmita")
                 moveWithDataIntent.putExtra(MoveWithDataActivity.EXTRA_AGE, 20)
                 startActivity(moveWithDataIntent)
+            }
+
+            R.id.btn_move_activity_object -> {
+                val person = Person(
+                    "Zaskha Sasmita",
+                    20,
+                    "zaskha@mail.com",
+                    "Bandung"
+                )
+                val moveWithObjectIntent = Intent(this@MainActivity, MoveWithObjectActivity::class.java)
+                moveWithObjectIntent.putExtra(MoveWithObjectActivity.EXTRA_PERSON, person)
+                startActivity(moveWithObjectIntent)
+            }
+
+            R.id.btn_dial_number -> {
+                val phoneNumber = "085884609583"
+                val dialPhoneIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
+                startActivity(dialPhoneIntent)
             }
         }
     }
